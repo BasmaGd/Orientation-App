@@ -10,8 +10,6 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IFiliere } from 'app/shared/model/filiere.model';
 import { getEntities as getFilieres } from 'app/entities/filiere/filiere.reducer';
-import { ICours } from 'app/shared/model/cours.model';
-import { getEntities as getCours } from 'app/entities/cours/cours.reducer';
 import { ICarriere } from 'app/shared/model/carriere.model';
 import { getEntity, updateEntity, createEntity, reset } from './carriere.reducer';
 
@@ -24,7 +22,6 @@ export const CarriereUpdate = () => {
   const isNew = id === undefined;
 
   const filieres = useAppSelector(state => state.filiere.entities);
-  const cours = useAppSelector(state => state.cours.entities);
   const carriereEntity = useAppSelector(state => state.carriere.entity);
   const loading = useAppSelector(state => state.carriere.loading);
   const updating = useAppSelector(state => state.carriere.updating);
@@ -42,7 +39,6 @@ export const CarriereUpdate = () => {
     }
 
     dispatch(getFilieres({}));
-    dispatch(getCours({}));
   }, []);
 
   useEffect(() => {
@@ -60,8 +56,7 @@ export const CarriereUpdate = () => {
     const entity = {
       ...carriereEntity,
       ...values,
-      filieres: mapIdList(values.filieres),
-      cours: mapIdList(values.cours),
+      nomFilieres: mapIdList(values.nomFilieres),
     };
 
     if (isNew) {
@@ -76,8 +71,7 @@ export const CarriereUpdate = () => {
       ? {}
       : {
           ...carriereEntity,
-          filieres: carriereEntity?.filieres?.map(e => e.id.toString()),
-          cours: carriereEntity?.cours?.map(e => e.id.toString()),
+          nomFilieres: carriereEntity?.nomFilieres?.map(e => e.id.toString()),
         };
 
   return (
@@ -120,33 +114,18 @@ export const CarriereUpdate = () => {
                 type="text"
               />
               <ValidatedField
-                label={translate('gestionDesEtudiantsApp.carriere.filiere')}
-                id="carriere-filiere"
-                data-cy="filiere"
+                label={translate('gestionDesEtudiantsApp.carriere.nomFiliere')}
+                id="carriere-nomFiliere"
+                data-cy="nomFiliere"
                 type="select"
-                name="filieres"
+                multiple
+                name="nomFilieres"
               >
                 <option value="" key="0" />
                 {filieres
                   ? filieres.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.nomFiliere}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                label={translate('gestionDesEtudiantsApp.carriere.cours')}
-                id="carriere-cours"
-                data-cy="cours"
-                type="select"
-                name="cours"
-              >
-                <option value="" key="0" />
-                {cours
-                  ? cours.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nomCours}
                       </option>
                     ))
                   : null}

@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240113035117"
+    "changelogDate": "20240113144344"
   },
   "applications": "*",
   "entityTableName": "filiere",
@@ -12,24 +12,21 @@
     {
       "fieldName": "description",
       "fieldType": "String"
-    },
-    {
-      "fieldName": "imageFiliere",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "any"
     }
   ],
   "name": "Filiere",
   "relationships": [
     {
       "otherEntityName": "cours",
+      "otherEntityRelationshipName": "nomFiliere",
       "relationshipName": "nomCours",
-      "relationshipSide": "right",
+      "relationshipSide": "left",
       "relationshipType": "many-to-many"
     },
     {
       "otherEntityName": "carriere",
-      "relationshipName": "nomFiliere",
+      "otherEntityRelationshipName": "nomFiliere",
+      "relationshipName": "nomCarriere",
       "relationshipSide": "right",
       "relationshipType": "many-to-many"
     }

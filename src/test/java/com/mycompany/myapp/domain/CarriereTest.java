@@ -1,7 +1,6 @@
 package com.mycompany.myapp.domain;
 
 import static com.mycompany.myapp.domain.CarriereTestSamples.*;
-import static com.mycompany.myapp.domain.CoursTestSamples.*;
 import static com.mycompany.myapp.domain.FiliereTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,38 +26,20 @@ class CarriereTest {
     }
 
     @Test
-    void filiereTest() throws Exception {
+    void nomFiliereTest() throws Exception {
         Carriere carriere = getCarriereRandomSampleGenerator();
         Filiere filiereBack = getFiliereRandomSampleGenerator();
 
-        carriere.addFiliere(filiereBack);
-        assertThat(carriere.getFilieres()).containsOnly(filiereBack);
+        carriere.addNomFiliere(filiereBack);
+        assertThat(carriere.getNomFilieres()).containsOnly(filiereBack);
 
-        carriere.removeFiliere(filiereBack);
-        assertThat(carriere.getFilieres()).doesNotContain(filiereBack);
+        carriere.removeNomFiliere(filiereBack);
+        assertThat(carriere.getNomFilieres()).doesNotContain(filiereBack);
 
-        carriere.filieres(new HashSet<>(Set.of(filiereBack)));
-        assertThat(carriere.getFilieres()).containsOnly(filiereBack);
+        carriere.nomFilieres(new HashSet<>(Set.of(filiereBack)));
+        assertThat(carriere.getNomFilieres()).containsOnly(filiereBack);
 
-        carriere.setFilieres(new HashSet<>());
-        assertThat(carriere.getFilieres()).doesNotContain(filiereBack);
-    }
-
-    @Test
-    void coursTest() throws Exception {
-        Carriere carriere = getCarriereRandomSampleGenerator();
-        Cours coursBack = getCoursRandomSampleGenerator();
-
-        carriere.addCours(coursBack);
-        assertThat(carriere.getCours()).containsOnly(coursBack);
-
-        carriere.removeCours(coursBack);
-        assertThat(carriere.getCours()).doesNotContain(coursBack);
-
-        carriere.cours(new HashSet<>(Set.of(coursBack)));
-        assertThat(carriere.getCours()).containsOnly(coursBack);
-
-        carriere.setCours(new HashSet<>());
-        assertThat(carriere.getCours()).doesNotContain(coursBack);
+        carriere.setNomFilieres(new HashSet<>());
+        assertThat(carriere.getNomFilieres()).doesNotContain(filiereBack);
     }
 }

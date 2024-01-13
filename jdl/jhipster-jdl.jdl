@@ -1,4 +1,3 @@
-
 entity Carriere {
   nomCarriere String,
   description String
@@ -6,18 +5,16 @@ entity Carriere {
 
 entity Filiere {
   nomFiliere String,
-  description String,
-  imageFiliere Blob
+  description String
 }
 
 entity Cours {
   nomCours String,
-  description String,
+  description String
 }
 
 
 relationship ManyToMany {
-  Cours  to Filiere{nomCours},
-  Carriere  to  Filiere{nomFiliere},
-  Carriere to Cours{nomCarriere}
+Filiere{nomCours} to Cours{nomFiliere},
+Carriere{nomFiliere}  to  Filiere{nomCarriere}
 }

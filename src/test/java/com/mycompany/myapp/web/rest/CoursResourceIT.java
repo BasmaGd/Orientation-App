@@ -2,7 +2,6 @@ package com.mycompany.myapp.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -10,19 +9,13 @@ import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Cours;
 import com.mycompany.myapp.repository.CoursRepository;
 import jakarta.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link CoursResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class CoursResourceIT {
@@ -51,9 +43,6 @@ class CoursResourceIT {
 
     @Autowired
     private CoursRepository coursRepository;
-
-    @Mock
-    private CoursRepository coursRepositoryMock;
 
     @Autowired
     private EntityManager em;
@@ -139,23 +128,6 @@ class CoursResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(cours.getId().intValue())))
             .andExpect(jsonPath("$.[*].nomCours").value(hasItem(DEFAULT_NOM_COURS)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllCoursWithEagerRelationshipsIsEnabled() throws Exception {
-        when(coursRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restCoursMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(coursRepositoryMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllCoursWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(coursRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restCoursMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
-        verify(coursRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

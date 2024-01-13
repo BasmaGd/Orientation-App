@@ -2,6 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -9,14 +10,19 @@ import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Filiere;
 import com.mycompany.myapp.repository.FiliereRepository;
 import jakarta.persistence.EntityManager;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link FiliereResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class FiliereResourceIT {
@@ -36,11 +43,6 @@ class FiliereResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final byte[] DEFAULT_IMAGE_FILIERE = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_IMAGE_FILIERE = TestUtil.createByteArray(1, "1");
-    private static final String DEFAULT_IMAGE_FILIERE_CONTENT_TYPE = "image/jpg";
-    private static final String UPDATED_IMAGE_FILIERE_CONTENT_TYPE = "image/png";
-
     private static final String ENTITY_API_URL = "/api/filieres";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -49,6 +51,9 @@ class FiliereResourceIT {
 
     @Autowired
     private FiliereRepository filiereRepository;
+
+    @Mock
+    private FiliereRepository filiereRepositoryMock;
 
     @Autowired
     private EntityManager em;
@@ -65,11 +70,7 @@ class FiliereResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Filiere createEntity(EntityManager em) {
-        Filiere filiere = new Filiere()
-            .nomFiliere(DEFAULT_NOM_FILIERE)
-            .description(DEFAULT_DESCRIPTION)
-            .imageFiliere(DEFAULT_IMAGE_FILIERE)
-            .imageFiliereContentType(DEFAULT_IMAGE_FILIERE_CONTENT_TYPE);
+        Filiere filiere = new Filiere().nomFiliere(DEFAULT_NOM_FILIERE).description(DEFAULT_DESCRIPTION);
         return filiere;
     }
 
@@ -80,11 +81,7 @@ class FiliereResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Filiere createUpdatedEntity(EntityManager em) {
-        Filiere filiere = new Filiere()
-            .nomFiliere(UPDATED_NOM_FILIERE)
-            .description(UPDATED_DESCRIPTION)
-            .imageFiliere(UPDATED_IMAGE_FILIERE)
-            .imageFiliereContentType(UPDATED_IMAGE_FILIERE_CONTENT_TYPE);
+        Filiere filiere = new Filiere().nomFiliere(UPDATED_NOM_FILIERE).description(UPDATED_DESCRIPTION);
         return filiere;
     }
 
@@ -108,8 +105,6 @@ class FiliereResourceIT {
         Filiere testFiliere = filiereList.get(filiereList.size() - 1);
         assertThat(testFiliere.getNomFiliere()).isEqualTo(DEFAULT_NOM_FILIERE);
         assertThat(testFiliere.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testFiliere.getImageFiliere()).isEqualTo(DEFAULT_IMAGE_FILIERE);
-        assertThat(testFiliere.getImageFiliereContentType()).isEqualTo(DEFAULT_IMAGE_FILIERE_CONTENT_TYPE);
     }
 
     @Test
@@ -143,9 +138,24 @@ class FiliereResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(filiere.getId().intValue())))
             .andExpect(jsonPath("$.[*].nomFiliere").value(hasItem(DEFAULT_NOM_FILIERE)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].imageFiliereContentType").value(hasItem(DEFAULT_IMAGE_FILIERE_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].imageFiliere").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_IMAGE_FILIERE))));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllFilieresWithEagerRelationshipsIsEnabled() throws Exception {
+        when(filiereRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restFiliereMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(filiereRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllFilieresWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(filiereRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restFiliereMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(filiereRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -161,9 +171,7 @@ class FiliereResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(filiere.getId().intValue()))
             .andExpect(jsonPath("$.nomFiliere").value(DEFAULT_NOM_FILIERE))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.imageFiliereContentType").value(DEFAULT_IMAGE_FILIERE_CONTENT_TYPE))
-            .andExpect(jsonPath("$.imageFiliere").value(Base64.getEncoder().encodeToString(DEFAULT_IMAGE_FILIERE)));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
 
     @Test
@@ -185,11 +193,7 @@ class FiliereResourceIT {
         Filiere updatedFiliere = filiereRepository.findById(filiere.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedFiliere are not directly saved in db
         em.detach(updatedFiliere);
-        updatedFiliere
-            .nomFiliere(UPDATED_NOM_FILIERE)
-            .description(UPDATED_DESCRIPTION)
-            .imageFiliere(UPDATED_IMAGE_FILIERE)
-            .imageFiliereContentType(UPDATED_IMAGE_FILIERE_CONTENT_TYPE);
+        updatedFiliere.nomFiliere(UPDATED_NOM_FILIERE).description(UPDATED_DESCRIPTION);
 
         restFiliereMockMvc
             .perform(
@@ -205,8 +209,6 @@ class FiliereResourceIT {
         Filiere testFiliere = filiereList.get(filiereList.size() - 1);
         assertThat(testFiliere.getNomFiliere()).isEqualTo(UPDATED_NOM_FILIERE);
         assertThat(testFiliere.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testFiliere.getImageFiliere()).isEqualTo(UPDATED_IMAGE_FILIERE);
-        assertThat(testFiliere.getImageFiliereContentType()).isEqualTo(UPDATED_IMAGE_FILIERE_CONTENT_TYPE);
     }
 
     @Test
@@ -277,10 +279,7 @@ class FiliereResourceIT {
         Filiere partialUpdatedFiliere = new Filiere();
         partialUpdatedFiliere.setId(filiere.getId());
 
-        partialUpdatedFiliere
-            .description(UPDATED_DESCRIPTION)
-            .imageFiliere(UPDATED_IMAGE_FILIERE)
-            .imageFiliereContentType(UPDATED_IMAGE_FILIERE_CONTENT_TYPE);
+        partialUpdatedFiliere.description(UPDATED_DESCRIPTION);
 
         restFiliereMockMvc
             .perform(
@@ -296,8 +295,6 @@ class FiliereResourceIT {
         Filiere testFiliere = filiereList.get(filiereList.size() - 1);
         assertThat(testFiliere.getNomFiliere()).isEqualTo(DEFAULT_NOM_FILIERE);
         assertThat(testFiliere.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testFiliere.getImageFiliere()).isEqualTo(UPDATED_IMAGE_FILIERE);
-        assertThat(testFiliere.getImageFiliereContentType()).isEqualTo(UPDATED_IMAGE_FILIERE_CONTENT_TYPE);
     }
 
     @Test
@@ -312,11 +309,7 @@ class FiliereResourceIT {
         Filiere partialUpdatedFiliere = new Filiere();
         partialUpdatedFiliere.setId(filiere.getId());
 
-        partialUpdatedFiliere
-            .nomFiliere(UPDATED_NOM_FILIERE)
-            .description(UPDATED_DESCRIPTION)
-            .imageFiliere(UPDATED_IMAGE_FILIERE)
-            .imageFiliereContentType(UPDATED_IMAGE_FILIERE_CONTENT_TYPE);
+        partialUpdatedFiliere.nomFiliere(UPDATED_NOM_FILIERE).description(UPDATED_DESCRIPTION);
 
         restFiliereMockMvc
             .perform(
@@ -332,8 +325,6 @@ class FiliereResourceIT {
         Filiere testFiliere = filiereList.get(filiereList.size() - 1);
         assertThat(testFiliere.getNomFiliere()).isEqualTo(UPDATED_NOM_FILIERE);
         assertThat(testFiliere.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testFiliere.getImageFiliere()).isEqualTo(UPDATED_IMAGE_FILIERE);
-        assertThat(testFiliere.getImageFiliereContentType()).isEqualTo(UPDATED_IMAGE_FILIERE_CONTENT_TYPE);
     }
 
     @Test

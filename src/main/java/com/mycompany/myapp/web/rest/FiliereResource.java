@@ -127,12 +127,6 @@ public class FiliereResource {
                 if (filiere.getDescription() != null) {
                     existingFiliere.setDescription(filiere.getDescription());
                 }
-                if (filiere.getImageFiliere() != null) {
-                    existingFiliere.setImageFiliere(filiere.getImageFiliere());
-                }
-                if (filiere.getImageFiliereContentType() != null) {
-                    existingFiliere.setImageFiliereContentType(filiere.getImageFiliereContentType());
-                }
 
                 return existingFiliere;
             })
@@ -147,12 +141,17 @@ public class FiliereResource {
     /**
      * {@code GET  /filieres} : get all the filieres.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of filieres in body.
      */
     @GetMapping("")
-    public List<Filiere> getAllFilieres() {
+    public List<Filiere> getAllFilieres(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all Filieres");
-        return filiereRepository.findAll();
+        if (eagerload) {
+            return filiereRepository.findAllWithEagerRelationships();
+        } else {
+            return filiereRepository.findAll();
+        }
     }
 
     /**
@@ -164,7 +163,7 @@ public class FiliereResource {
     @GetMapping("/{id}")
     public ResponseEntity<Filiere> getFiliere(@PathVariable("id") Long id) {
         log.debug("REST request to get Filiere : {}", id);
-        Optional<Filiere> filiere = filiereRepository.findById(id);
+        Optional<Filiere> filiere = filiereRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(filiere);
     }
 
@@ -178,9 +177,4 @@ public class FiliereResource {
     public ResponseEntity<Void> deleteFiliere(@PathVariable("id") Long id) {
         log.debug("REST request to delete Filiere : {}", id);
         filiereRepository.deleteById(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
-    }
-}
+        return R

@@ -20,9 +20,8 @@
       "id": "ID",
       "nomFiliere": "Nom Filiere",
       "description": "Description",
-      "imageFiliere": "Image Filiere",
       "nomCours": "Nom Cours",
-      "nomFiliere": "Nom Filiere"
+      "nomCarriere": "Nom Carriere"
     }
   }
 }

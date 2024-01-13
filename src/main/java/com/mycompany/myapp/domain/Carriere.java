@@ -32,23 +32,13 @@ public class Carriere implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "rel_carriere__filiere",
+        name = "rel_carriere__nom_filiere",
         joinColumns = @JoinColumn(name = "carriere_id"),
-        inverseJoinColumns = @JoinColumn(name = "filiere_id")
+        inverseJoinColumns = @JoinColumn(name = "nom_filiere_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "nomCours", "nomFilieres" }, allowSetters = true)
-    private Set<Filiere> filieres = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "rel_carriere__cours",
-        joinColumns = @JoinColumn(name = "carriere_id"),
-        inverseJoinColumns = @JoinColumn(name = "cours_id")
-    )
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "filieres", "nomCarrieres" }, allowSetters = true)
-    private Set<Cours> cours = new HashSet<>();
+    @JsonIgnoreProperties(value = { "nomCours", "nomCarrieres" }, allowSetters = true)
+    private Set<Filiere> nomFilieres = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -91,49 +81,26 @@ public class Carriere implements Serializable {
         this.description = description;
     }
 
-    public Set<Filiere> getFilieres() {
-        return this.filieres;
+    public Set<Filiere> getNomFilieres() {
+        return this.nomFilieres;
     }
 
-    public void setFilieres(Set<Filiere> filieres) {
-        this.filieres = filieres;
+    public void setNomFilieres(Set<Filiere> filieres) {
+        this.nomFilieres = filieres;
     }
 
-    public Carriere filieres(Set<Filiere> filieres) {
-        this.setFilieres(filieres);
+    public Carriere nomFilieres(Set<Filiere> filieres) {
+        this.setNomFilieres(filieres);
         return this;
     }
 
-    public Carriere addFiliere(Filiere filiere) {
-        this.filieres.add(filiere);
+    public Carriere addNomFiliere(Filiere filiere) {
+        this.nomFilieres.add(filiere);
         return this;
     }
 
-    public Carriere removeFiliere(Filiere filiere) {
-        this.filieres.remove(filiere);
-        return this;
-    }
-
-    public Set<Cours> getCours() {
-        return this.cours;
-    }
-
-    public void setCours(Set<Cours> cours) {
-        this.cours = cours;
-    }
-
-    public Carriere cours(Set<Cours> cours) {
-        this.setCours(cours);
-        return this;
-    }
-
-    public Carriere addCours(Cours cours) {
-        this.cours.add(cours);
-        return this;
-    }
-
-    public Carriere removeCours(Cours cours) {
-        this.cours.remove(cours);
+    public Carriere removeNomFiliere(Filiere filiere) {
+        this.nomFilieres.remove(filiere);
         return this;
     }
 
@@ -161,8 +128,4 @@ public class Carriere implements Serializable {
     public String toString() {
         return "Carriere{" +
             "id=" + getId() +
-            ", nomCarriere='" + getNomCarriere() + "'" +
-            ", description='" + getDescription() + "'" +
-            "}";
-    }
-}
+         

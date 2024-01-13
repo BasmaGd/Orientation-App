@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { openFile, byteSize, Translate, getSortState } from 'react-jhipster';
+import { Translate, getSortState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 import { ASC, DESC, SORT } from 'app/shared/util/pagination.constants';
@@ -96,9 +96,8 @@ export const Filiere = () => {
                   <Translate contentKey="gestionDesEtudiantsApp.filiere.description">Description</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('description')} />
                 </th>
-                <th className="hand" onClick={sort('imageFiliere')}>
-                  <Translate contentKey="gestionDesEtudiantsApp.filiere.imageFiliere">Image Filiere</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('imageFiliere')} />
+                <th>
+                  <Translate contentKey="gestionDesEtudiantsApp.filiere.nomCours">Nom Cours</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -114,19 +113,14 @@ export const Filiere = () => {
                   <td>{filiere.nomFiliere}</td>
                   <td>{filiere.description}</td>
                   <td>
-                    {filiere.imageFiliere ? (
-                      <div>
-                        {filiere.imageFiliereContentType ? (
-                          <a onClick={openFile(filiere.imageFiliereContentType, filiere.imageFiliere)}>
-                            <Translate contentKey="entity.action.open">Open</Translate>
-                            &nbsp;
-                          </a>
-                        ) : null}
-                        <span>
-                          {filiere.imageFiliereContentType}, {byteSize(filiere.imageFiliere)}
-                        </span>
-                      </div>
-                    ) : null}
+                    {filiere.nomCours
+                      ? filiere.nomCours.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`/cours/${val.id}`}>{val.id}</Link>
+                            {j === filiere.nomCours.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

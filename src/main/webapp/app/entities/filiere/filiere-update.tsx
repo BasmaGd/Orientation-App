@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
+import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -60,6 +60,7 @@ export const FiliereUpdate = () => {
     const entity = {
       ...filiereEntity,
       ...values,
+      nomCours: mapIdList(values.nomCours),
     };
 
     if (isNew) {
@@ -74,6 +75,7 @@ export const FiliereUpdate = () => {
       ? {}
       : {
           ...filiereEntity,
+          nomCours: filiereEntity?.nomCours?.map(e => e.id.toString()),
         };
 
   return (
@@ -115,13 +117,23 @@ export const FiliereUpdate = () => {
                 data-cy="description"
                 type="text"
               />
-              <ValidatedBlobField
-                label={translate('gestionDesEtudiantsApp.filiere.imageFiliere')}
-                id="filiere-imageFiliere"
-                name="imageFiliere"
-                data-cy="imageFiliere"
-                openActionLabel={translate('entity.action.open')}
-              />
+              <ValidatedField
+                label={translate('gestionDesEtudiantsApp.filiere.nomCours')}
+                id="filiere-nomCours"
+                data-cy="nomCours"
+                type="select"
+                multiple
+                name="nomCours"
+              >
+                <option value="" key="0" />
+                {cours
+                  ? cours.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.nomCours}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/filiere" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

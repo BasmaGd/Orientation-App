@@ -97,10 +97,7 @@ export const Carriere = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('description')} />
                 </th>
                 <th>
-                  <Translate contentKey="gestionDesEtudiantsApp.carriere.filiere">Filiere</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="gestionDesEtudiantsApp.carriere.cours">Cours</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="gestionDesEtudiantsApp.carriere.nomFiliere">Nom Filiere</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -116,21 +113,11 @@ export const Carriere = () => {
                   <td>{carriere.nomCarriere}</td>
                   <td>{carriere.description}</td>
                   <td>
-                    {carriere.filieres
-                      ? carriere.filieres.map((val, j) => (
+                    {carriere.nomFilieres
+                      ? carriere.nomFilieres.map((val, j) => (
                           <span key={j}>
                             <Link to={`/filiere/${val.id}`}>{val.id}</Link>
-                            {j === carriere.filieres.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
-                  <td>
-                    {carriere.cours
-                      ? carriere.cours.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`/cours/${val.id}`}>{val.id}</Link>
-                            {j === carriere.cours.length - 1 ? '' : ', '}
+                            {j === carriere.nomFilieres.length - 1 ? '' : ', '}
                           </span>
                         ))
                       : null}

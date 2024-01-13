@@ -96,9 +96,6 @@ export const Cours = () => {
                   <Translate contentKey="gestionDesEtudiantsApp.cours.description">Description</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('description')} />
                 </th>
-                <th>
-                  <Translate contentKey="gestionDesEtudiantsApp.cours.filiere">Filiere</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th />
               </tr>
             </thead>
@@ -112,16 +109,6 @@ export const Cours = () => {
                   </td>
                   <td>{cours.nomCours}</td>
                   <td>{cours.description}</td>
-                  <td>
-                    {cours.filieres
-                      ? cours.filieres.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`/filiere/${val.id}`}>{val.id}</Link>
-                            {j === cours.filieres.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/cours/${cours.id}`} color="info" size="sm" data-cy="entityDetailsButton">

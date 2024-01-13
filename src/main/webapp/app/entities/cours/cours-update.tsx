@@ -10,8 +10,6 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IFiliere } from 'app/shared/model/filiere.model';
 import { getEntities as getFilieres } from 'app/entities/filiere/filiere.reducer';
-import { ICarriere } from 'app/shared/model/carriere.model';
-import { getEntities as getCarrieres } from 'app/entities/carriere/carriere.reducer';
 import { ICours } from 'app/shared/model/cours.model';
 import { getEntity, updateEntity, createEntity, reset } from './cours.reducer';
 
@@ -24,7 +22,6 @@ export const CoursUpdate = () => {
   const isNew = id === undefined;
 
   const filieres = useAppSelector(state => state.filiere.entities);
-  const carrieres = useAppSelector(state => state.carriere.entities);
   const coursEntity = useAppSelector(state => state.cours.entity);
   const loading = useAppSelector(state => state.cours.loading);
   const updating = useAppSelector(state => state.cours.updating);
@@ -42,7 +39,6 @@ export const CoursUpdate = () => {
     }
 
     dispatch(getFilieres({}));
-    dispatch(getCarrieres({}));
   }, []);
 
   useEffect(() => {
@@ -60,7 +56,6 @@ export const CoursUpdate = () => {
     const entity = {
       ...coursEntity,
       ...values,
-      filieres: mapIdList(values.filieres),
     };
 
     if (isNew) {
@@ -75,7 +70,6 @@ export const CoursUpdate = () => {
       ? {}
       : {
           ...coursEntity,
-          filieres: coursEntity?.filieres?.map(e => e.id.toString()),
         };
 
   return (
@@ -117,22 +111,6 @@ export const CoursUpdate = () => {
                 data-cy="description"
                 type="text"
               />
-              <ValidatedField
-                label={translate('gestionDesEtudiantsApp.cours.filiere')}
-                id="cours-filiere"
-                data-cy="filiere"
-                type="select"
-                name="filieres"
-              >
-                <option value="" key="0" />
-                {filieres
-                  ? filieres.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nomFiliere}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/cours" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

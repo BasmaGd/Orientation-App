@@ -30,22 +30,20 @@ public class Filiere implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Lob
-    @Column(name = "image_filiere")
-    private byte[] imageFiliere;
-
-    @Column(name = "image_filiere_content_type")
-    private String imageFiliereContentType;
-
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "filieres")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "rel_filiere__nom_cours",
+        joinColumns = @JoinColumn(name = "filiere_id"),
+        inverseJoinColumns = @JoinColumn(name = "nom_cours_id")
+    )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "filieres", "nomCarrieres" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "nomFilieres" }, allowSetters = true)
     private Set<Cours> nomCours = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "filieres")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "nomFilieres")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "filieres", "cours" }, allowSetters = true)
-    private Set<Carriere> nomFilieres = new HashSet<>();
+    @JsonIgnoreProperties(value = { "nomFilieres" }, allowSetters = true)
+    private Set<Carriere> nomCarrieres = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -88,43 +86,11 @@ public class Filiere implements Serializable {
         this.description = description;
     }
 
-    public byte[] getImageFiliere() {
-        return this.imageFiliere;
-    }
-
-    public Filiere imageFiliere(byte[] imageFiliere) {
-        this.setImageFiliere(imageFiliere);
-        return this;
-    }
-
-    public void setImageFiliere(byte[] imageFiliere) {
-        this.imageFiliere = imageFiliere;
-    }
-
-    public String getImageFiliereContentType() {
-        return this.imageFiliereContentType;
-    }
-
-    public Filiere imageFiliereContentType(String imageFiliereContentType) {
-        this.imageFiliereContentType = imageFiliereContentType;
-        return this;
-    }
-
-    public void setImageFiliereContentType(String imageFiliereContentType) {
-        this.imageFiliereContentType = imageFiliereContentType;
-    }
-
     public Set<Cours> getNomCours() {
         return this.nomCours;
     }
 
     public void setNomCours(Set<Cours> cours) {
-        if (this.nomCours != null) {
-            this.nomCours.forEach(i -> i.removeFiliere(this));
-        }
-        if (cours != null) {
-            cours.forEach(i -> i.addFiliere(this));
-        }
         this.nomCours = cours;
     }
 
@@ -135,44 +101,42 @@ public class Filiere implements Serializable {
 
     public Filiere addNomCours(Cours cours) {
         this.nomCours.add(cours);
-        cours.getFilieres().add(this);
         return this;
     }
 
     public Filiere removeNomCours(Cours cours) {
         this.nomCours.remove(cours);
-        cours.getFilieres().remove(this);
         return this;
     }
 
-    public Set<Carriere> getNomFilieres() {
-        return this.nomFilieres;
+    public Set<Carriere> getNomCarrieres() {
+        return this.nomCarrieres;
     }
 
-    public void setNomFilieres(Set<Carriere> carrieres) {
-        if (this.nomFilieres != null) {
-            this.nomFilieres.forEach(i -> i.removeFiliere(this));
+    public void setNomCarrieres(Set<Carriere> carrieres) {
+        if (this.nomCarrieres != null) {
+            this.nomCarrieres.forEach(i -> i.removeNomFiliere(this));
         }
         if (carrieres != null) {
-            carrieres.forEach(i -> i.addFiliere(this));
+            carrieres.forEach(i -> i.addNomFiliere(this));
         }
-        this.nomFilieres = carrieres;
+        this.nomCarrieres = carrieres;
     }
 
-    public Filiere nomFilieres(Set<Carriere> carrieres) {
-        this.setNomFilieres(carrieres);
+    public Filiere nomCarrieres(Set<Carriere> carrieres) {
+        this.setNomCarrieres(carrieres);
         return this;
     }
 
-    public Filiere addNomFiliere(Carriere carriere) {
-        this.nomFilieres.add(carriere);
-        carriere.getFilieres().add(this);
+    public Filiere addNomCarriere(Carriere carriere) {
+        this.nomCarrieres.add(carriere);
+        carriere.getNomFilieres().add(this);
         return this;
     }
 
-    public Filiere removeNomFiliere(Carriere carriere) {
-        this.nomFilieres.remove(carriere);
-        carriere.getFilieres().remove(this);
+    public Filiere removeNomCarriere(Carriere carriere) {
+        this.nomCarrieres.remove(carriere);
+        carriere.getNomFilieres().remove(this);
         return this;
     }
 
@@ -199,11 +163,4 @@ public class Filiere implements Serializable {
     @Override
     public String toString() {
         return "Filiere{" +
-            "id=" + getId() +
-            ", nomFiliere='" + getNomFiliere() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", imageFiliere='" + getImageFiliere() + "'" +
-            ", imageFiliereContentType='" + getImageFiliereContentType() + "'" +
-            "}";
-    }
-}
+  

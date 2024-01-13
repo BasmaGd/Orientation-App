@@ -33,40 +33,36 @@ class FiliereTest {
 
         filiere.addNomCours(coursBack);
         assertThat(filiere.getNomCours()).containsOnly(coursBack);
-        assertThat(coursBack.getFilieres()).containsOnly(filiere);
 
         filiere.removeNomCours(coursBack);
         assertThat(filiere.getNomCours()).doesNotContain(coursBack);
-        assertThat(coursBack.getFilieres()).doesNotContain(filiere);
 
         filiere.nomCours(new HashSet<>(Set.of(coursBack)));
         assertThat(filiere.getNomCours()).containsOnly(coursBack);
-        assertThat(coursBack.getFilieres()).containsOnly(filiere);
 
         filiere.setNomCours(new HashSet<>());
         assertThat(filiere.getNomCours()).doesNotContain(coursBack);
-        assertThat(coursBack.getFilieres()).doesNotContain(filiere);
     }
 
     @Test
-    void nomFiliereTest() throws Exception {
+    void nomCarriereTest() throws Exception {
         Filiere filiere = getFiliereRandomSampleGenerator();
         Carriere carriereBack = getCarriereRandomSampleGenerator();
 
-        filiere.addNomFiliere(carriereBack);
-        assertThat(filiere.getNomFilieres()).containsOnly(carriereBack);
-        assertThat(carriereBack.getFilieres()).containsOnly(filiere);
+        filiere.addNomCarriere(carriereBack);
+        assertThat(filiere.getNomCarrieres()).containsOnly(carriereBack);
+        assertThat(carriereBack.getNomFilieres()).containsOnly(filiere);
 
-        filiere.removeNomFiliere(carriereBack);
-        assertThat(filiere.getNomFilieres()).doesNotContain(carriereBack);
-        assertThat(carriereBack.getFilieres()).doesNotContain(filiere);
+        filiere.removeNomCarriere(carriereBack);
+        assertThat(filiere.getNomCarrieres()).doesNotContain(carriereBack);
+        assertThat(carriereBack.getNomFilieres()).doesNotContain(filiere);
 
-        filiere.nomFilieres(new HashSet<>(Set.of(carriereBack)));
-        assertThat(filiere.getNomFilieres()).containsOnly(carriereBack);
-        assertThat(carriereBack.getFilieres()).containsOnly(filiere);
+        filiere.nomCarrieres(new HashSet<>(Set.of(carriereBack)));
+        assertThat(filiere.getNomCarrieres()).containsOnly(carriereBack);
+        assertThat(carriereBack.getNomFilieres()).containsOnly(filiere);
 
-        filiere.setNomFilieres(new HashSet<>());
-        assertThat(filiere.getNomFilieres()).doesNotContain(carriereBack);
-        assertThat(carriereBack.getFilieres()).doesNotContain(filiere);
+        filiere.setNomCarrieres(new HashSet<>());
+        assertThat(filiere.getNomCarrieres()).doesNotContain(carriereBack);
+        assertThat(carriereBack.getNomFilieres()).doesNotContain(filiere);
     }
 }

@@ -30,20 +30,10 @@ public class Cours implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "rel_cours__filiere",
-        joinColumns = @JoinColumn(name = "cours_id"),
-        inverseJoinColumns = @JoinColumn(name = "filiere_id")
-    )
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "nomCours")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "nomCours", "nomFilieres" }, allowSetters = true)
-    private Set<Filiere> filieres = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "cours")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "filieres", "cours" }, allowSetters = true)
-    private Set<Carriere> nomCarrieres = new HashSet<>();
+    @JsonIgnoreProperties(value = { "nomCours", "nomCarrieres" }, allowSetters = true)
+    private Set<Filiere> nomFilieres = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -86,57 +76,34 @@ public class Cours implements Serializable {
         this.description = description;
     }
 
-    public Set<Filiere> getFilieres() {
-        return this.filieres;
+    public Set<Filiere> getNomFilieres() {
+        return this.nomFilieres;
     }
 
-    public void setFilieres(Set<Filiere> filieres) {
-        this.filieres = filieres;
-    }
-
-    public Cours filieres(Set<Filiere> filieres) {
-        this.setFilieres(filieres);
-        return this;
-    }
-
-    public Cours addFiliere(Filiere filiere) {
-        this.filieres.add(filiere);
-        return this;
-    }
-
-    public Cours removeFiliere(Filiere filiere) {
-        this.filieres.remove(filiere);
-        return this;
-    }
-
-    public Set<Carriere> getNomCarrieres() {
-        return this.nomCarrieres;
-    }
-
-    public void setNomCarrieres(Set<Carriere> carrieres) {
-        if (this.nomCarrieres != null) {
-            this.nomCarrieres.forEach(i -> i.removeCours(this));
+    public void setNomFilieres(Set<Filiere> filieres) {
+        if (this.nomFilieres != null) {
+            this.nomFilieres.forEach(i -> i.removeNomCours(this));
         }
-        if (carrieres != null) {
-            carrieres.forEach(i -> i.addCours(this));
+        if (filieres != null) {
+            filieres.forEach(i -> i.addNomCours(this));
         }
-        this.nomCarrieres = carrieres;
+        this.nomFilieres = filieres;
     }
 
-    public Cours nomCarrieres(Set<Carriere> carrieres) {
-        this.setNomCarrieres(carrieres);
+    public Cours nomFilieres(Set<Filiere> filieres) {
+        this.setNomFilieres(filieres);
         return this;
     }
 
-    public Cours addNomCarriere(Carriere carriere) {
-        this.nomCarrieres.add(carriere);
-        carriere.getCours().add(this);
+    public Cours addNomFiliere(Filiere filiere) {
+        this.nomFilieres.add(filiere);
+        filiere.getNomCours().add(this);
         return this;
     }
 
-    public Cours removeNomCarriere(Carriere carriere) {
-        this.nomCarrieres.remove(carriere);
-        carriere.getCours().remove(this);
+    public Cours removeNomFiliere(Filiere filiere) {
+        this.nomFilieres.remove(filiere);
+        filiere.getNomCours().remove(this);
         return this;
     }
 
@@ -164,8 +131,3 @@ public class Cours implements Serializable {
     public String toString() {
         return "Cours{" +
             "id=" + getId() +
-            ", nomCours='" + getNomCours() + "'" +
-            ", description='" + getDescription() + "'" +
-            "}";
-    }
-}

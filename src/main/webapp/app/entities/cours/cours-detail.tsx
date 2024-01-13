@@ -43,19 +43,6 @@ export const CoursDetail = () => {
             </span>
           </dt>
           <dd>{coursEntity.description}</dd>
-          <dt>
-            <Translate contentKey="gestionDesEtudiantsApp.cours.filiere">Filiere</Translate>
-          </dt>
-          <dd>
-            {coursEntity.filieres
-              ? coursEntity.filieres.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {coursEntity.filieres && i === coursEntity.filieres.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
         </dl>
         <Button tag={Link} to="/cours" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

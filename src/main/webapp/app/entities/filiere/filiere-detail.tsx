@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, openFile, byteSize } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -44,23 +44,17 @@ export const FiliereDetail = () => {
           </dt>
           <dd>{filiereEntity.description}</dd>
           <dt>
-            <span id="imageFiliere">
-              <Translate contentKey="gestionDesEtudiantsApp.filiere.imageFiliere">Image Filiere</Translate>
-            </span>
+            <Translate contentKey="gestionDesEtudiantsApp.filiere.nomCours">Nom Cours</Translate>
           </dt>
           <dd>
-            {filiereEntity.imageFiliere ? (
-              <div>
-                {filiereEntity.imageFiliereContentType ? (
-                  <a onClick={openFile(filiereEntity.imageFiliereContentType, filiereEntity.imageFiliere)}>
-                    <Translate contentKey="entity.action.open">Open</Translate>&nbsp;
-                  </a>
-                ) : null}
-                <span>
-                  {filiereEntity.imageFiliereContentType}, {byteSize(filiereEntity.imageFiliere)}
-                </span>
-              </div>
-            ) : null}
+            {filiereEntity.nomCours
+              ? filiereEntity.nomCours.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.id}</a>
+                    {filiereEntity.nomCours && i === filiereEntity.nomCours.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
           </dd>
         </dl>
         <Button tag={Link} to="/filiere" replace color="info" data-cy="entityDetailsBackButton">

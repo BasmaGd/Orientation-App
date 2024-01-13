@@ -44,27 +44,14 @@ export const CarriereDetail = () => {
           </dt>
           <dd>{carriereEntity.description}</dd>
           <dt>
-            <Translate contentKey="gestionDesEtudiantsApp.carriere.filiere">Filiere</Translate>
+            <Translate contentKey="gestionDesEtudiantsApp.carriere.nomFiliere">Nom Filiere</Translate>
           </dt>
           <dd>
-            {carriereEntity.filieres
-              ? carriereEntity.filieres.map((val, i) => (
+            {carriereEntity.nomFilieres
+              ? carriereEntity.nomFilieres.map((val, i) => (
                   <span key={val.id}>
                     <a>{val.id}</a>
-                    {carriereEntity.filieres && i === carriereEntity.filieres.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>
-            <Translate contentKey="gestionDesEtudiantsApp.carriere.cours">Cours</Translate>
-          </dt>
-          <dd>
-            {carriereEntity.cours
-              ? carriereEntity.cours.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {carriereEntity.cours && i === carriereEntity.cours.length - 1 ? '' : ', '}
+                    {carriereEntity.nomFilieres && i === carriereEntity.nomFilieres.length - 1 ? '' : ', '}
                   </span>
                 ))
               : null}

@@ -21,7 +21,7 @@ public class CarriereRepositoryWithBagRelationshipsImpl implements CarriereRepos
 
     @Override
     public Optional<Carriere> fetchBagRelationships(Optional<Carriere> carriere) {
-        return carriere.map(this::fetchFilieres).map(this::fetchCours);
+        return carriere.map(this::fetchNomFilieres);
     }
 
     @Override
@@ -31,48 +31,27 @@ public class CarriereRepositoryWithBagRelationshipsImpl implements CarriereRepos
 
     @Override
     public List<Carriere> fetchBagRelationships(List<Carriere> carrieres) {
-        return Optional.of(carrieres).map(this::fetchFilieres).map(this::fetchCours).orElse(Collections.emptyList());
+        return Optional.of(carrieres).map(this::fetchNomFilieres).orElse(Collections.emptyList());
     }
 
-    Carriere fetchFilieres(Carriere result) {
+    Carriere fetchNomFilieres(Carriere result) {
         return entityManager
-            .createQuery("select carriere from Carriere carriere left join fetch carriere.filieres where carriere.id = :id", Carriere.class)
+            .createQuery(
+                "select carriere from Carriere carriere left join fetch carriere.nomFilieres where carriere.id = :id",
+                Carriere.class
+            )
             .setParameter("id", result.getId())
             .getSingleResult();
     }
 
-    List<Carriere> fetchFilieres(List<Carriere> carrieres) {
+    List<Carriere> fetchNomFilieres(List<Carriere> carrieres) {
         HashMap<Object, Integer> order = new HashMap<>();
         IntStream.range(0, carrieres.size()).forEach(index -> order.put(carrieres.get(index).getId(), index));
         List<Carriere> result = entityManager
             .createQuery(
-                "select carriere from Carriere carriere left join fetch carriere.filieres where carriere in :carrieres",
+                "select carriere from Carriere carriere left join fetch carriere.nomFilieres where carriere in :carrieres",
                 Carriere.class
             )
             .setParameter("carrieres", carrieres)
             .getResultList();
-        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
-        return result;
-    }
-
-    Carriere fetchCours(Carriere result) {
-        return entityManager
-            .createQuery("select carriere from Carriere carriere left join fetch carriere.cours where carriere.id = :id", Carriere.class)
-            .setParameter("id", result.getId())
-            .getSingleResult();
-    }
-
-    List<Carriere> fetchCours(List<Carriere> carrieres) {
-        HashMap<Object, Integer> order = new HashMap<>();
-        IntStream.range(0, carrieres.size()).forEach(index -> order.put(carrieres.get(index).getId(), index));
-        List<Carriere> result = entityManager
-            .createQuery(
-                "select carriere from Carriere carriere left join fetch carriere.cours where carriere in :carrieres",
-                Carriere.class
-            )
-            .setParameter("carrieres", carrieres)
-            .getResultList();
-        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
-        return result;
-    }
-}
+        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), 

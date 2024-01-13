@@ -5,10 +5,8 @@ export interface IFiliere {
   id?: number;
   nomFiliere?: string | null;
   description?: string | null;
-  imageFiliereContentType?: string | null;
-  imageFiliere?: string | null;
   nomCours?: ICours[] | null;
-  nomFilieres?: ICarriere[] | null;
+  nomCarrieres?: ICarriere[] | null;
 }
 
 export const defaultValue: Readonly<IFiliere> = {};

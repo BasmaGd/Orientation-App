@@ -139,17 +139,12 @@ public class CoursResource {
     /**
      * {@code GET  /cours} : get all the cours.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of cours in body.
      */
     @GetMapping("")
-    public List<Cours> getAllCours(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
+    public List<Cours> getAllCours() {
         log.debug("REST request to get all Cours");
-        if (eagerload) {
-            return coursRepository.findAllWithEagerRelationships();
-        } else {
-            return coursRepository.findAll();
-        }
+        return coursRepository.findAll();
     }
 
     /**
@@ -161,7 +156,7 @@ public class CoursResource {
     @GetMapping("/{id}")
     public ResponseEntity<Cours> getCours(@PathVariable("id") Long id) {
         log.debug("REST request to get Cours : {}", id);
-        Optional<Cours> cours = coursRepository.findOneWithEagerRelationships(id);
+        Optional<Cours> cours = coursRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(cours);
     }
 
@@ -175,9 +170,4 @@ public class CoursResource {
     public ResponseEntity<Void> deleteCours(@PathVariable("id") Long id) {
         log.debug("REST request to delete Cours : {}", id);
         coursRepository.deleteById(id);
-        return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-            .build();
-    }
-}
+        return Response

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Carriere.
+    -->
+    <changeSet id="20240113144244-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="carriere_id"
+                                 baseTableName="rel_carriere__nom_filiere"
+                                 constraintName="fk_rel_carriere__nom_filiere__carriere_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="carriere"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="nom_filiere_id"
+                                 baseTableName="rel_carriere__nom_filiere"
+                                 constraintName="fk_rel_carriere__nom_filiere__nom_filiere_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="filiere"
+                                 />
+    </changeSet>
+</databaseChangeLog>

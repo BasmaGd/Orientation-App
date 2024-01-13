@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240113035017"
+    "changelogDate": "20240113144244"
   },
   "applications": "*",
   "entityTableName": "carriere",
@@ -18,15 +18,8 @@
   "relationships": [
     {
       "otherEntityName": "filiere",
-      "otherEntityRelationshipName": "nomFiliere",
-      "relationshipName": "filiere",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityName": "cours",
       "otherEntityRelationshipName": "nomCarriere",
-      "relationshipName": "cours",
+      "relationshipName": "nomFiliere",
       "relationshipSide": "left",
       "relationshipType": "many-to-many"
     }
