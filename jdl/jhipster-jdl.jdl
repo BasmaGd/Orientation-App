@@ -1,0 +1,23 @@
+
+entity Carriere {
+  nomCarriere String,
+  description String
+}
+
+entity Filiere {
+  nomFiliere String,
+  description String,
+  imageFiliere Blob
+}
+
+entity Cours {
+  nomCours String,
+  description String,
+}
+
+
+relationship ManyToMany {
+  Cours  to Filiere{nomCours},
+  Carriere  to  Filiere{nomFiliere},
+  Carriere to Cours{nomCarriere}
+}

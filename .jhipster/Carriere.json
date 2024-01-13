@@ -1,0 +1,35 @@
+{
+  "annotations": {
+    "changelogDate": "20240113035017"
+  },
+  "applications": "*",
+  "entityTableName": "carriere",
+  "fields": [
+    {
+      "fieldName": "nomCarriere",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Carriere",
+  "relationships": [
+    {
+      "otherEntityName": "filiere",
+      "otherEntityRelationshipName": "nomFiliere",
+      "relationshipName": "filiere",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "nomCarriere",
+      "relationshipName": "cours",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}
