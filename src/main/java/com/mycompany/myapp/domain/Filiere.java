@@ -163,4 +163,9 @@ public class Filiere implements Serializable {
     @Override
     public String toString() {
         return "Filiere{" +
-  
+            "id=" + getId() +
+            ", nomFiliere='" + getNomFiliere() + "'" +
+            ", description='" + getDescription() + "'" +
+            "}";
+    }
+}

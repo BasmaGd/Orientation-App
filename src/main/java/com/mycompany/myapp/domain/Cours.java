@@ -131,3 +131,8 @@ public class Cours implements Serializable {
     public String toString() {
         return "Cours{" +
             "id=" + getId() +
+            ", nomCours='" + getNomCours() + "'" +
+            ", description='" + getDescription() + "'" +
+            "}";
+    }
+}

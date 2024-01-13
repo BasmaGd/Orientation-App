@@ -170,4 +170,9 @@ public class CoursResource {
     public ResponseEntity<Void> deleteCours(@PathVariable("id") Long id) {
         log.debug("REST request to delete Cours : {}", id);
         coursRepository.deleteById(id);
-        return Response
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+}

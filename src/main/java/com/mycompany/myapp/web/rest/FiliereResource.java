@@ -177,4 +177,9 @@ public class FiliereResource {
     public ResponseEntity<Void> deleteFiliere(@PathVariable("id") Long id) {
         log.debug("REST request to delete Filiere : {}", id);
         filiereRepository.deleteById(id);
-        return R
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+}

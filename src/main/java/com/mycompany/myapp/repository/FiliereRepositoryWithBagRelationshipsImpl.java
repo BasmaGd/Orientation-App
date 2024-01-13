@@ -48,4 +48,7 @@ public class FiliereRepositoryWithBagRelationshipsImpl implements FiliereReposit
             .createQuery("select filiere from Filiere filiere left join fetch filiere.nomCours where filiere in :filieres", Filiere.class)
             .setParameter("filieres", filieres)
             .getResultList();
-        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.
+        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
+        return result;
+    }
+}

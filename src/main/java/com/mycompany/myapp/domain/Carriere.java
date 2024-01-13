@@ -128,4 +128,8 @@ public class Carriere implements Serializable {
     public String toString() {
         return "Carriere{" +
             "id=" + getId() +
-         
+            ", nomCarriere='" + getNomCarriere() + "'" +
+            ", description='" + getDescription() + "'" +
+            "}";
+    }
+}

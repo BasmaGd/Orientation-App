@@ -10,4 +10,5 @@ public interface FiliereRepositoryWithBagRelationships {
 
     List<Filiere> fetchBagRelationships(List<Filiere> filieres);
 
-    Page<Filiere> fetchBagRelationships(Page<Filiere> f
+    Page<Filiere> fetchBagRelationships(Page<Filiere> filieres);
+}

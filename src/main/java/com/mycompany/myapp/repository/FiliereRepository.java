@@ -25,4 +25,6 @@ public interface FiliereRepository extends FiliereRepositoryWithBagRelationships
     }
 
     default Page<Filiere> findAllWithEagerRelationships(Pageable pageable) {
-        return this.fetchBagRelationships(this.f
+        return this.fetchBagRelationships(this.findAll(pageable));
+    }
+}

@@ -54,4 +54,7 @@ public class CarriereRepositoryWithBagRelationshipsImpl implements CarriereRepos
             )
             .setParameter("carrieres", carrieres)
             .getResultList();
-        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), 
+        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
+        return result;
+    }
+}
