@@ -3,6 +3,7 @@
     "changelogDate": "20240113144444"
   },
   "applications": "*",
+  "changelogDate": "20240113144444",
   "entityTableName": "cours",
   "fields": [
     {

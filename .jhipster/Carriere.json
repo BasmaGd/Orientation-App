@@ -3,6 +3,7 @@
     "changelogDate": "20240113144244"
   },
   "applications": "*",
+  "changelogDate": "20240113144244",
   "entityTableName": "carriere",
   "fields": [
     {

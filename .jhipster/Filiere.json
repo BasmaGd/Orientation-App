@@ -3,6 +3,7 @@
     "changelogDate": "20240113144344"
   },
   "applications": "*",
+  "changelogDate": "20240113144344",
   "entityTableName": "filiere",
   "fields": [
     {
