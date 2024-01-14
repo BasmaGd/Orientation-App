@@ -2,6 +2,10 @@
 
 This application was generated using JHipster 8.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.1.0](https://www.jhipster.tech/documentation-archive/v8.1.0).
 
+
+https://github.com/BasmaGd/Orientation-App/assets/118211411/2542e48a-908c-4e58-be78-d2ef2a5757ce
+
+
 ## Project Structure
 
 Node is required for generation and recommended for development. `package.json` is always generated for a better development experience with prettier, commit hooks, scripts and so on.
