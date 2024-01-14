@@ -32,7 +32,7 @@ export const Home = () => {
           </div>
         ) : (
           <div>
-            <Alert color="warning">
+            {/* <Alert color="warning">
               <Translate contentKey="global.messages.info.authenticated.prefix">If you want to </Translate>
 
               <Link to="/login" className="alert-link">
@@ -43,14 +43,14 @@ export const Home = () => {
                 <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
                 <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
               </Translate>
-            </Alert>
+            </Alert> */}
 
-            <Alert color="warning">
+            {/* <Alert color="warning">
               <Translate contentKey="global.messages.info.register.noaccount">You do not have an account yet?</Translate>&nbsp;
               <Link to="/account/register" className="alert-link">
                 <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
               </Link>
-            </Alert>
+            </Alert> */}
           </div>
         )}
 
@@ -100,7 +100,7 @@ export const Home = () => {
         </ul>
 
         <p>
-          <p style={{ marginTop: '77px' }}>Copyright &copy; Basma ELGARDA et Anass BOUPOUCHI</p>
+          <p style={{ marginTop: '100px' }}>Copyright &copy; Basma ELGARDA et Anass BOUPOUCHI</p>
         </p>
       </Col>
     </Row>

@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Explorez Votre Chemin, Découvrez Votre Destin!",
-    "subtitle": "Ceci est votre page d'accueil",
+    "subtitle": "Votre plateforme dédiée à l'orientation professionnelle, une boussole vers des choix judicieux et une passerelle vers des carrières épanouissantes. Décidez avec confiance, avancez avec succès.",
     "logged": {
       "message": "Vous êtes connecté en tant que \"{{username}}\"."
     },
