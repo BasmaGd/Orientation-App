@@ -9,7 +9,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * A Carriere.
+ * A Carriere
  */
 @Entity
 @Table(name = "carriere")
