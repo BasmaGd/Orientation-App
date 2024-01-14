@@ -9,10 +9,12 @@ import { overrideSortStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities } from './carriere.reducer';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 
 export const Carriere = () => {
   const dispatch = useAppDispatch();
-
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
   const pageLocation = useLocation();
   const navigate = useNavigate();
 
@@ -72,11 +74,15 @@ export const Carriere = () => {
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="gestionDesEtudiantsApp.carriere.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/carriere/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="gestionDesEtudiantsApp.carriere.home.createLabel">Create new Carriere</Translate>
-          </Link>
+          {isAdmin && (
+            <>
+              <Link to="/carriere/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+                <FontAwesomeIcon icon="plus" />
+                &nbsp;
+                <Translate contentKey="gestionDesEtudiantsApp.carriere.home.createLabel">Create new Carriere</Translate>
+              </Link>
+            </>
+          )}
         </div>
       </h2>
       <div className="table-responsive">
@@ -130,23 +136,27 @@ export const Carriere = () => {
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-                      <Button tag={Link} to={`/carriere/${carriere.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        onClick={() => (window.location.href = `/carriere/${carriere.id}/delete`)}
-                        color="danger"
-                        size="sm"
-                        data-cy="entityDeleteButton"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
+                      {isAdmin && (
+                        <>
+                          <Button tag={Link} to={`/carriere/${carriere.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                            <FontAwesomeIcon icon="pencil-alt" />{' '}
+                            <span className="d-none d-md-inline">
+                              <Translate contentKey="entity.action.edit">Edit</Translate>
+                            </span>
+                          </Button>
+                          <Button
+                            onClick={() => (window.location.href = `/carriere/${carriere.id}/delete`)}
+                            color="danger"
+                            size="sm"
+                            data-cy="entityDeleteButton"
+                          >
+                            <FontAwesomeIcon icon="trash" />{' '}
+                            <span className="d-none d-md-inline">
+                              <Translate contentKey="entity.action.delete">Delete</Translate>
+                            </span>
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
