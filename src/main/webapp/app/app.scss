@@ -1,6 +1,6 @@
-// Override Bootstrap variables
+/* Override Bootstrap variables */
 @import 'bootstrap-variables';
-// Import Bootstrap source files from node_modules
+/* Import Bootstrap source files from node_modules */
 @import 'bootstrap/scss/bootstrap';
 body {
   background: #fafafa;
@@ -24,21 +24,26 @@ a {
 
 .app-container {
   box-sizing: border-box;
-  .view-container {
-    width: 100%;
-    height: calc(100% - 40px);
-    overflow-y: auto;
-    overflow-x: hidden;
+  height: 100vh; /* Utilisation de la hauteur de la vue à 100% de la hauteur de la fenêtre */
+  display: flex;
+  justify-content: center; /* Aligner horizontalement au centre */
+  align-items: center; /* Aligner verticalement au centre */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem;
+  background-image: url('content/images/R.jpg');
+  background-size: cover; /* Ajustement pour que l'image couvre tout le fond */
+  background-position: center;
+  .card {
     padding: 1rem;
-    background-image: url('content/images/R.jpg');
-    .card {
-      padding: 1rem;
-    }
-    .view-routes {
+    left: 200px;
+    width: 1500px;
+  }
+  .view-routes {
+    height: 100%;
+
+    > div {
       height: 100%;
-      > div {
-        height: 100%;
-      }
     }
   }
 }
@@ -54,16 +59,9 @@ a {
   padding: 5px 25px 50px 25px !important;
 }
 
-/* ==========================================================================
-Browser Upgrade Prompt
-========================================================================== */
+/* ... (le reste du code reste inchangé) */
 
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
+/* Reste du code inchangé */
 
 /* ==========================================================================
 Custom button styles

@@ -100,11 +100,7 @@ export const Home = () => {
         </ul>
 
         <p>
-          <Translate contentKey="home.like">If you like JHipster, do not forget to give us a star on</Translate>{' '}
-          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          !
+          <p style={{ marginTop: '77px' }}>Copyright &copy; Basma ELGARDA et Anass BOUPOUCHI</p>
         </p>
       </Col>
     </Row>

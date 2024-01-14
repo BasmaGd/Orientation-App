@@ -1,54 +1,55 @@
 /* ==========================================================================
 Main page styles
 ========================================================================== */
+
 .hipster {
-  display: inline-block;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 497px;
   background: url('/content/images/R.jpg') no-repeat center top;
-  background-size: contain;
+  background-size: cover; /* Ajustement pour que l'image couvre tout le fond */
 }
 
-.pad {
+.hipster-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.hipster {
-  width: 200px; /* Ajustez la taille en fonction de vos besoins */
-  height: 200px; /* Ajustez la taille en fonction de vos besoins */
-  border-radius: 50%;
-  background-color: #f0f0f0; /* Couleur de fond */
-  /* Ajoutez ici votre image ou configuration spécifique */
-}
-
 .home-content {
-  padding: 20px; /* Espace intérieur */
+  padding: 20px;
+  text-align: center; /* Centrer le texte dans le contenu */
 }
 
 .home-title {
-  font-size: 2.5rem; /* Taille de police pour le titre */
-  margin-bottom: 20px; /* Marge inférieure pour séparer le titre du contenu */
+  font-size: 2.5rem;
+  margin-bottom: 20px;
 }
 
 .home-subtitle {
-  font-size: 1.2rem; /* Taille de police pour le sous-titre */
-  color: #555; /* Couleur du texte */
-  margin-bottom: 30px; /* Marge inférieure pour séparer le sous-titre du contenu */
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 30px;
 }
 
 .alert-message {
-  margin-bottom: 20px; /* Marge inférieure pour séparer les alertes */
+  margin-bottom: 20px;
 }
 
 .button-group {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; /* Alignement des boutons à gauche */
-  margin-top: 30px; /* Marge supérieure pour séparer les boutons */
+  justify-content: center; /* Centrer les boutons horizontalement */
+  margin-top: 30px;
 }
 
 .primary-button {
-  margin-right: 20px; /* Marge entre les boutons */
+  margin-right: 20px;
 }
+
+/* Ajoutez ici d'autres styles spécifiques à votre interface */
