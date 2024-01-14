@@ -18,10 +18,10 @@
         "title": "Filiere"
       },
       "id": "ID",
-      "nomFiliere": "Nom Filiere",
+      "nomFiliere": "Filiere Name",
       "description": "Description",
-      "nomCours": "Nom Cours",
-      "nomCarriere": "Nom Carriere"
+      "nomCours": "Cours",
+      "nomCarriere": " Carriere Name"
     }
   }
 }

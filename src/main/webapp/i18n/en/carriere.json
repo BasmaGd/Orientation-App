@@ -18,9 +18,9 @@
         "title": "Carriere"
       },
       "id": "ID",
-      "nomCarriere": "Nom Carriere",
+      "nomCarriere": "Career Name",
       "description": "Description",
-      "nomFiliere": "Nom Filiere"
+      "nomFiliere": "Filiere"
     }
   }
 }

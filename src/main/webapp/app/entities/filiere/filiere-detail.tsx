@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect } from 'react';
+import { Translate } from 'react-jhipster';
+import { Link, useParams } from 'react-router-dom';
+import { Button, Col, Row } from 'reactstrap';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
