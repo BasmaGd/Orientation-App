@@ -12,14 +12,12 @@ UserName:user
 Password: user
 # Application par jHipster
 https://github.com/BasmaGd/Orientation-App/assets/118211411/2542e48a-908c-4e58-be78-d2ef2a5757ce
-
-# Utilisation de Docker
-![image](https://github.com/BasmaGd/Orientation-App/assets/118211411/dc539c0c-4dcf-43b2-a8b4-d2dd0e7ea3b0)
-
 # Application avec Spring boot+React
 
 https://github.com/BasmaGd/Orientation-App/assets/118211411/07efa90b-2bc8-44ff-894a-43c5ab9914f1
 
+# Utilisation de Docker
+![image](https://github.com/BasmaGd/Orientation-App/assets/118211411/dc539c0c-4dcf-43b2-a8b4-d2dd0e7ea3b0)
 ## Project Structure
 
 Node is required for generation and recommended for development. `package.json` is always generated for a better development experience with prettier, commit hooks, scripts and so on.
