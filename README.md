@@ -14,6 +14,8 @@ Password: user
 
 https://github.com/BasmaGd/Orientation-App/assets/118211411/2542e48a-908c-4e58-be78-d2ef2a5757ce
 
+# Utilisation de Docker
+![image](https://github.com/BasmaGd/Orientation-App/assets/118211411/dc539c0c-4dcf-43b2-a8b4-d2dd0e7ea3b0)
 
 ## Project Structure
 
