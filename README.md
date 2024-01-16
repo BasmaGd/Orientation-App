@@ -1,6 +1,5 @@
 # gestionDesEtudiants
-
-This application was generated using JHipster 8.1.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.1.0](https://www.jhipster.tech/documentation-archive/v8.1.0).
+Le but principal de ce projet consiste à élaborer une plateforme d'orientation universitaire visant à assister les étudiants dans l'exploration de carrières, la découverte des filières d'études appropriées, ainsi que la consultation des cours associés.
 
 # Compte Professeur: 
 UserName:admin
@@ -11,11 +10,14 @@ Password: admin
 UserName:user
 
 Password: user
-
+# Application par jHipster
 https://github.com/BasmaGd/Orientation-App/assets/118211411/2542e48a-908c-4e58-be78-d2ef2a5757ce
 
 # Utilisation de Docker
 ![image](https://github.com/BasmaGd/Orientation-App/assets/118211411/dc539c0c-4dcf-43b2-a8b4-d2dd0e7ea3b0)
+
+# Application avec Spring boot+React
+
 
 ## Project Structure
 
